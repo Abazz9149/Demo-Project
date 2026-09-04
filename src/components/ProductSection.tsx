@@ -6,7 +6,15 @@ import { products } from '@/lib/data';
 import type { Product } from '@/lib/types';
 import CategoryNav from './CategoryNav';
 import ProductCard from './ProductCard';
-import { fadeUpVariants, staggerContainerVariants, viewportConfig } from '@/lib/animations';
+import {
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  cardStaggerVariants,
+  buttonRevealVariants,
+  viewportConfig,
+  staggerContainerVariants,
+} from '@/lib/animations';
 
 interface ProductSectionProps {
   onAddToCart: (product: Product) => void;
@@ -20,31 +28,31 @@ export default function ProductSection({ onAddToCart }: ProductSectionProps) {
     : products.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="products" className="py-20 lg:py-28 bg-cream-50">
+    <section id="products" className="py-20 lg:py-28 bg-cream-50 scroll-mt-24 sm:scroll-mt-28">
       <div className="section-pad max-w-screen-2xl mx-auto">
         {/* Section Heading */}
         <motion.div
           className="text-center mb-10"
-          variants={fadeUpVariants}
+          variants={staggerContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
         >
-          <span className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
+          <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
             Our Products
-          </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
+          </motion.span>
+          <motion.h2 variants={sectionHeadingVariants} className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
             Purity, Bottled &amp; Packed
-          </h2>
-          <p className="text-brand-600/70 text-lg max-w-xl mx-auto">
+          </motion.h2>
+          <motion.p variants={sectionDescVariants} className="text-brand-600/70 text-lg max-w-xl mx-auto">
             Every product passes 20+ quality checks. Every ingredient is natively sourced. Every batch is small and intentional.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Category Nav */}
         <motion.div
           className="flex justify-center mb-10"
-          variants={fadeUpVariants}
+          variants={buttonRevealVariants}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
@@ -60,9 +68,10 @@ export default function ProductSection({ onAddToCart }: ProductSectionProps) {
           <motion.div
             key={activeCategory}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
-            variants={staggerContainerVariants}
+            variants={cardStaggerVariants}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.12 }}
           >
             {filtered.map((product, index) => (
               <ProductCard
@@ -78,14 +87,19 @@ export default function ProductSection({ onAddToCart }: ProductSectionProps) {
         {/* View All button */}
         <motion.div
           className="flex justify-center mt-12"
-          variants={fadeUpVariants}
+          variants={buttonRevealVariants}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
         >
-          <button id="view-all-btn" className="btn-outline">
+          <motion.button
+            id="view-all-btn"
+            className="btn-outline"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+          >
             View All Products
-          </button>
+          </motion.button>
         </motion.div>
       </div>
     </section>

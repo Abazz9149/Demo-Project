@@ -5,7 +5,13 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { testimonials } from '@/lib/data';
-import { fadeUpVariants, staggerContainerVariants, viewportConfig } from '@/lib/animations';
+import {
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  staggerContainerVariants,
+  viewportConfig,
+} from '@/lib/animations';
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -17,7 +23,7 @@ export default function Testimonials() {
   const next = () => setActiveIndex((i) => (i + 1) % testimonials.length);
 
   return (
-    <section ref={ref} id="testimonials" className="py-20 lg:py-28 relative overflow-hidden bg-white">
+    <section ref={ref} id="testimonials" className="py-20 lg:py-28 relative overflow-hidden bg-white scroll-mt-24 sm:scroll-mt-28">
       {/* Background accent */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
@@ -35,13 +41,13 @@ export default function Testimonials() {
           whileInView="visible"
           viewport={viewportConfig}
         >
-          <motion.span variants={fadeUpVariants} className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
+          <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
             Customer Stories
           </motion.span>
-          <motion.h2 variants={fadeUpVariants} className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
+          <motion.h2 variants={sectionHeadingVariants} className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
             Families Trust VedaRoots
           </motion.h2>
-          <motion.p variants={fadeUpVariants} className="text-brand-600/70 text-lg max-w-xl mx-auto">
+          <motion.p variants={sectionDescVariants} className="text-brand-600/70 text-lg max-w-xl mx-auto">
             Over 50,000 families have made the switch. Here is what they say.
           </motion.p>
         </motion.div>

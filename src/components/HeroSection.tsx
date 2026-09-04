@@ -17,12 +17,15 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-cream-50 via-brand-50/40 to-cream-100"
+      className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-cream-50 via-brand-50/40 to-cream-100 pt-28 sm:pt-32 lg:pt-36"
     >
       {/* Subtle organic background texture */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{ y: bgY }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
       >
         <div className="absolute top-20 right-0 w-[600px] h-[600px] rounded-full bg-brand-100/50 blur-3xl" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-cream-200/60 blur-3xl" />
@@ -36,28 +39,32 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      <div className="section-pad max-w-screen-2xl mx-auto w-full pt-32 pb-20 lg:pt-36 lg:pb-24">
+      <div className="section-pad max-w-screen-2xl mx-auto w-full pt-4 pb-16 sm:pt-6 sm:pb-20 lg:pt-8 lg:pb-24">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text Content */}
           <motion.div
             className="relative z-10"
             style={{ y: textY, opacity }}
-            variants={staggerContainerVariants}
-            initial="hidden"
-            animate="visible"
           >
             {/* Badge */}
-            <motion.div variants={fadeUpVariants} className="mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="mb-6"
+            >
               <span className="inline-flex items-center gap-2 bg-brand-600/10 text-brand-700 text-xs font-semibold px-4 py-2 rounded-full border border-brand-200">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
                 100% Certified Organic · Direct from Farms
               </span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* 1. Main Headline */}
             <div className="overflow-hidden mb-2">
               <motion.h1
-                variants={heroTextVariants}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-brand-900 leading-[1.05] tracking-tight"
               >
                 Pure Roots.
@@ -65,38 +72,54 @@ export default function HeroSection() {
             </div>
             <div className="overflow-hidden mb-4">
               <motion.h1
-                variants={heroTextVariants}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.75, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
                 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight"
               >
                 <span className="text-gradient">Real Nutrition.</span>
               </motion.h1>
             </div>
 
+            {/* 2. Supporting Description */}
             <motion.p
-              variants={fadeUpVariants}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
               className="text-brand-600/80 text-lg sm:text-xl max-w-xl leading-relaxed mb-8"
             >
               We bring back what Indian kitchens were always meant to have — <strong className="font-semibold text-brand-700">traditionally processed, natively sourced</strong> foods that nourish the way nature intended.
             </motion.p>
 
-            {/* CTA Buttons */}
-            <motion.div variants={fadeUpVariants} className="flex flex-wrap gap-4 mb-10">
+            {/* 3. CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.68, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap gap-4 mb-10"
+            >
               <a id="hero-shop-btn" href="#products" className="btn-primary text-base px-8 py-3.5">
                 Shop Now <ArrowRight size={16} />
               </a>
-              <button
+              <a
                 id="hero-story-btn"
+                href="#why-us"
                 className="btn-outline text-base px-7 py-3.5 flex items-center gap-2"
               >
                 <div className="w-7 h-7 bg-brand-600 rounded-full flex items-center justify-center">
                   <Play size={11} fill="white" className="text-white ml-0.5" />
                 </div>
                 Our Story
-              </button>
+              </a>
             </motion.div>
 
             {/* Trust Stats */}
-            <motion.div variants={fadeUpVariants} className="flex flex-wrap gap-6 sm:gap-10">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap gap-6 sm:gap-10"
+            >
               {[
                 { value: '50K+', label: 'Happy Families' },
                 { value: '5000+', label: 'Farming Partners' },
@@ -110,14 +133,13 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Product Imagery */}
+          {/* Right: 4. Product / Hero Imagery */}
           <motion.div
             className="relative flex items-center justify-center"
             style={{ y: imgY }}
-            variants={scaleInVariants}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.3 }}
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.85, delay: 0.88, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Main product image */}
             <div className="relative w-full max-w-lg aspect-square">
@@ -140,12 +162,12 @@ export default function HeroSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-900/30 to-transparent" />
               </motion.div>
 
-              {/* Floating ingredient cards */}
+              {/* 5. Floating Decorative Badges */}
               <motion.div
                 className="absolute -top-4 -right-4 sm:-right-8 bg-white rounded-2xl shadow-xl px-4 py-3 z-20 max-w-[140px]"
-                initial={{ opacity: 0, x: 20, y: -10 }}
+                initial={{ opacity: 0, x: 15, y: -10 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.6 }}
+                transition={{ delay: 1.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -3 }}
               >
                 <div className="text-xl mb-1">🐄</div>
@@ -155,9 +177,9 @@ export default function HeroSection() {
 
               <motion.div
                 className="absolute -bottom-4 -left-4 sm:-left-8 bg-white rounded-2xl shadow-xl px-4 py-3 z-20 max-w-[140px]"
-                initial={{ opacity: 0, x: -20, y: 10 }}
+                initial={{ opacity: 0, x: -15, y: 10 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={{ delay: 1.1, duration: 0.6 }}
+                transition={{ delay: 1.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -3 }}
               >
                 <div className="text-xl mb-1">⭐</div>
@@ -167,9 +189,9 @@ export default function HeroSection() {
 
               <motion.div
                 className="absolute bottom-16 -right-4 sm:-right-10 bg-brand-600 text-white rounded-2xl shadow-xl px-4 py-3 z-20"
-                initial={{ opacity: 0, scale: 0.7 }}
+                initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.3, duration: 0.5, type: 'spring' }}
+                transition={{ delay: 1.45, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ scale: 1.05 }}
               >
                 <div className="text-lg font-display font-bold">30% OFF</div>
@@ -180,22 +202,36 @@ export default function HeroSection() {
             {/* Floating ingredient blobs */}
             <motion.div
               className="absolute top-1/4 -left-8 text-4xl"
-              animate={{ y: [0, -15, 0], rotate: [0, 10, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: [0, -12, 0], rotate: [0, 8, 0] }}
+              transition={{
+                opacity: { delay: 1.6, duration: 0.8 },
+                y: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+                rotate: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+              }}
             >
               🌾
             </motion.div>
             <motion.div
               className="absolute bottom-1/4 -right-4 sm:-right-12 text-3xl"
-              animate={{ y: [0, 12, 0], rotate: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: [0, 10, 0], rotate: [0, -6, 0] }}
+              transition={{
+                opacity: { delay: 1.7, duration: 0.8 },
+                y: { duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1 },
+                rotate: { duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1 },
+              }}
             >
               🌿
             </motion.div>
             <motion.div
               className="absolute top-0 left-1/4 text-2xl"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: [0, -8, 0] }}
+              transition={{
+                opacity: { delay: 1.8, duration: 0.8 },
+                y: { duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 },
+              }}
             >
               ✨
             </motion.div>
@@ -205,7 +241,7 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8 }}

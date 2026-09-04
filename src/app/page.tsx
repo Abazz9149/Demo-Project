@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import type { Product } from '@/lib/types';
-import AnnouncementBar from '@/components/AnnouncementBar';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
@@ -53,7 +52,6 @@ export default function HomePage() {
   return (
     <>
       <CustomCursor />
-      <AnnouncementBar />
       <Navbar cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
       <main>
         <HeroSection />

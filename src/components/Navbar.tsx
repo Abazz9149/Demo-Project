@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShoppingCart, User, Menu, X, Leaf } from 'lucide-react';
 import { navLinks } from '@/lib/data';
+import AnnouncementBar from './AnnouncementBar';
 
 interface NavbarProps {
   cartCount: number;
@@ -16,7 +17,8 @@ export default function Navbar({ cartCount, onCartOpen }: NavbarProps) {
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -24,99 +26,101 @@ export default function Navbar({ cartCount, onCartOpen }: NavbarProps) {
   return (
     <>
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'bg-cream-50/95 backdrop-blur-glass shadow-sm border-b border-cream-200/60'
-            : 'bg-transparent'
-        }`}
-        initial={{ y: -100, opacity: 0 }}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out"
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="section-pad max-w-screen-2xl mx-auto flex items-center justify-between h-16 sm:h-20">
-          {/* Mobile: Hamburger */}
-          <button
-            id="mobile-menu-btn"
-            onClick={() => setMobileOpen(true)}
-            className="lg:hidden p-2 -ml-2 text-brand-700"
-            aria-label="Open menu"
-          >
-            <Menu size={22} />
-          </button>
+        {/* Collapsible Announcement Bar */}
+        <div
+          className={`transition-all duration-350 ease-out overflow-hidden ${
+            scrolled
+              ? 'max-h-0 opacity-0 -translate-y-2 pointer-events-none'
+              : 'max-h-14 opacity-100 translate-y-0'
+          }`}
+        >
+          <AnnouncementBar />
+        </div>
 
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-brand-600 rounded-full flex items-center justify-center group-hover:bg-brand-700 transition-colors">
-              <Leaf size={16} className="text-white" />
-            </div>
-            <span
-              className={`font-display text-xl font-bold tracking-tight transition-colors duration-300 ${
-                scrolled ? 'text-brand-800' : 'text-brand-900'
-              }`}
-            >
-              VedaRoots
-            </span>
-          </a>
-
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium relative group transition-colors duration-200 ${
-                  scrolled
-                    ? 'text-brand-700 hover:text-brand-500'
-                    : 'text-brand-800 hover:text-brand-600'
-                }`}
-              >
-                {link.label}
-                <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-brand-500 group-hover:w-full transition-all duration-300 rounded-full" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Right Icons */}
-          <div className="flex items-center gap-1 sm:gap-2">
+        {/* Main Navigation Bar */}
+        <div
+          className={`w-full transition-all duration-350 ease-out ${
+            scrolled
+              ? 'bg-cream-50/95 backdrop-blur-glass shadow-[0_4px_24px_rgba(45,99,45,0.06)] border-b border-cream-200/70 py-2.5 sm:py-3'
+              : 'bg-cream-50/85 backdrop-blur-md border-b border-cream-200/40 py-3.5 sm:py-4.5 lg:py-5'
+          }`}
+        >
+          <div className="section-pad max-w-screen-2xl mx-auto flex items-center justify-between">
+            {/* Mobile: Hamburger */}
             <button
-              id="search-btn"
-              onClick={() => setSearchOpen(true)}
-              aria-label="Search"
-              className={`p-2 rounded-full transition-colors hover:bg-brand-100 ${
-                scrolled ? 'text-brand-700' : 'text-brand-800'
-              }`}
+              id="mobile-menu-btn"
+              onClick={() => setMobileOpen(true)}
+              className="lg:hidden p-2 -ml-2 text-brand-700 hover:text-brand-900 rounded-lg transition-colors"
+              aria-label="Open menu"
             >
-              <Search size={18} />
+              <Menu size={22} />
             </button>
-            <button
-              id="account-btn"
-              aria-label="Account"
-              className={`hidden sm:flex p-2 rounded-full transition-colors hover:bg-brand-100 ${
-                scrolled ? 'text-brand-700' : 'text-brand-800'
-              }`}
-            >
-              <User size={18} />
-            </button>
-            <button
-              id="cart-btn"
-              onClick={onCartOpen}
-              aria-label={`Cart with ${cartCount} items`}
-              className={`p-2 rounded-full relative transition-colors hover:bg-brand-100 ${
-                scrolled ? 'text-brand-700' : 'text-brand-800'
-              }`}
-            >
-              <ShoppingCart size={18} />
-              {cartCount > 0 && (
-                <motion.span
-                  key={cartCount}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-earth-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+
+            {/* Logo */}
+            <a href="#" className="flex items-center gap-2.5 group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-brand-600 rounded-full flex items-center justify-center group-hover:bg-brand-700 transition-colors shadow-sm">
+                <Leaf size={18} className="text-white" />
+              </div>
+              <span className="font-display text-xl sm:text-2xl font-bold tracking-tight text-brand-900">
+                VedaRoots
+              </span>
+            </a>
+
+            {/* Desktop Nav Links */}
+            <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium relative group text-brand-800 hover:text-brand-600 py-1.5 transition-colors duration-200"
                 >
-                  {cartCount}
-                </motion.span>
-              )}
-            </button>
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-600 group-hover:w-full transition-all duration-300 rounded-full" />
+                </a>
+              ))}
+            </nav>
+
+            {/* Right Icons */}
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <button
+                id="search-btn"
+                onClick={() => setSearchOpen(true)}
+                aria-label="Search"
+                className="p-2.5 rounded-full transition-colors hover:bg-brand-100/70 text-brand-800"
+              >
+                <Search size={18} />
+              </button>
+              <button
+                id="account-btn"
+                aria-label="Account"
+                className="hidden sm:flex p-2.5 rounded-full transition-colors hover:bg-brand-100/70 text-brand-800"
+              >
+                <User size={18} />
+              </button>
+              <button
+                id="cart-btn"
+                onClick={onCartOpen}
+                aria-label={`Cart with ${cartCount} items`}
+                className="p-2.5 rounded-full relative transition-colors hover:bg-brand-100/70 text-brand-800"
+              >
+                <ShoppingCart size={18} />
+                {cartCount > 0 && (
+                  <motion.span
+                    key={cartCount}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute top-1 right-1 w-4 h-4 bg-earth-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center"
+                  >
+                    {cartCount}
+                  </motion.span>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </motion.header>

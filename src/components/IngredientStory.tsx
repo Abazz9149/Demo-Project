@@ -3,7 +3,13 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { fadeUpVariants, staggerContainerVariants, viewportConfig } from '@/lib/animations';
+import {
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  staggerContainerVariants,
+  viewportConfig,
+} from '@/lib/animations';
 
 const ingredientCards = [
   {
@@ -35,7 +41,7 @@ export default function IngredientStory() {
   const bgY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
 
   return (
-    <section id="ingredients" ref={ref} className="py-20 lg:py-28 bg-brand-950 relative overflow-hidden">
+    <section id="ingredients" ref={ref} className="py-20 lg:py-28 bg-brand-950 relative overflow-hidden scroll-mt-24 sm:scroll-mt-28">
       {/* Parallax texture */}
       <motion.div
         className="absolute inset-0 opacity-5 pointer-events-none"
@@ -55,14 +61,14 @@ export default function IngredientStory() {
           whileInView="visible"
           viewport={viewportConfig}
         >
-          <motion.span variants={fadeUpVariants} className="text-xs uppercase tracking-widest text-earth-400 font-semibold mb-3 block">
+          <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-earth-400 font-semibold mb-3 block">
             Our Philosophy
           </motion.span>
-          <motion.h2 variants={fadeUpVariants} className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
+          <motion.h2 variants={sectionHeadingVariants} className="font-display text-4xl sm:text-5xl font-bold text-white mb-4">
             Native Ingredients.{' '}
             <span className="text-earth-400">No Substitutes.</span>
           </motion.h2>
-          <motion.p variants={fadeUpVariants} className="text-brand-200/70 text-lg max-w-xl mx-auto">
+          <motion.p variants={sectionDescVariants} className="text-brand-200/70 text-lg max-w-xl mx-auto">
             Great food starts with great ingredients. We go to extraordinary lengths so you don't have to compromise.
           </motion.p>
         </motion.div>
@@ -87,25 +93,31 @@ function IngredientCard({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
 
   return (
     <motion.div
       ref={ref}
       className="relative rounded-3xl overflow-hidden aspect-[4/5] group cursor-pointer"
-      initial={{ opacity: 0, y: 60 }}
+      initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.7, delay: index * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
       whileHover={{ scale: 1.02 }}
     >
-      {/* Parallax Image */}
-      <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+      {/* Parallax Image slowly scaling into place */}
+      <motion.div
+        className="absolute inset-0"
+        style={{ y: imgY }}
+        initial={{ scale: 1.08 }}
+        whileInView={{ scale: 1.02 }}
+        transition={{ duration: 0.9, delay: index * 0.12, ease: [0.25, 0.1, 0.25, 1] }}
+      >
         <Image
           src={card.image}
           alt={card.title}
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </motion.div>
@@ -113,21 +125,21 @@ function IngredientCard({
       {/* Gradient overlay */}
       <div className={`absolute inset-0 bg-gradient-to-t ${card.accent} transition-opacity duration-300`} />
 
-      {/* Text */}
-      <div className="absolute bottom-0 left-0 right-0 p-7">
-        <motion.h3
-          className="font-display text-xl sm:text-2xl font-bold text-white mb-3 leading-snug"
-          initial={{ y: 10, opacity: 0.8 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: index * 0.15 + 0.3 }}
-          viewport={{ once: true }}
-        >
+      {/* Text: fades in slightly after image */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 p-7"
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.12 + 0.25, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        <h3 className="font-display text-xl sm:text-2xl font-bold text-white mb-3 leading-snug">
           {card.title}
-        </motion.h3>
+        </h3>
         <p className="text-white/70 text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
           {card.description}
         </p>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

@@ -143,7 +143,13 @@ export default function Footer() {
       {/* Copyright */}
       <div className="border-t border-brand-800">
         <div className="section-pad max-w-screen-2xl mx-auto py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-brand-500">
-          <p>© 2026 VedaRoots. All rights reserved.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <p>© 2026 VedaRoots. All rights reserved.</p>
+            <span className="hidden sm:inline text-brand-700">·</span>
+            <span className="text-amber-400 font-medium bg-brand-900/70 px-2.5 py-0.5 rounded-full border border-brand-800 text-[11px]">
+              This is a demo website
+            </span>
+          </div>
           <div className="flex gap-5">
             <a href="#" className="hover:text-brand-300 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-brand-300 transition-colors">Terms of Service</a>

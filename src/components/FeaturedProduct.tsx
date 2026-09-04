@@ -5,7 +5,14 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 import { featuredProduct } from '@/lib/data';
-import { fadeUpVariants, staggerContainerVariants, viewportConfig } from '@/lib/animations';
+import {
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  fadeUpVariants,
+  staggerContainerVariants,
+  viewportConfig,
+} from '@/lib/animations';
 import type { Product } from '@/lib/types';
 
 interface FeaturedProductProps {
@@ -15,8 +22,8 @@ interface FeaturedProductProps {
 export default function FeaturedProductSection({ onAddToCart }: FeaturedProductProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
-  const imgRotate = useTransform(scrollYProgress, [0, 1], [-3, 3]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
+  const imgRotate = useTransform(scrollYProgress, [0, 1], [-2, 2]);
 
   const mockProduct: Product = {
     id: 'featured-1',
@@ -38,26 +45,26 @@ export default function FeaturedProductSection({ onAddToCart }: FeaturedProductP
       <div className="section-pad max-w-screen-2xl mx-auto">
         <motion.div
           className="text-center mb-16"
-          variants={fadeUpVariants}
+          variants={staggerContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={viewportConfig}
         >
-          <span className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
+          <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
             Editor's Pick
-          </span>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold text-brand-900">
+          </motion.span>
+          <motion.h2 variants={sectionHeadingVariants} className="font-display text-4xl sm:text-5xl font-bold text-brand-900">
             Our Flagship Product
-          </h2>
+          </motion.h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Product Image */}
           <motion.div
             className="relative"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-80px' }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative aspect-square max-w-lg mx-auto">

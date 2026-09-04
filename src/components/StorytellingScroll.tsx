@@ -3,6 +3,13 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import {
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  staggerContainerVariants,
+  viewportConfig,
+} from '@/lib/animations';
 
 const stages = [
   {
@@ -37,20 +44,20 @@ export default function StorytellingScroll() {
       {/* Section heading */}
       <motion.div
         className="section-pad max-w-screen-2xl mx-auto text-center mb-20"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.7 }}
+        variants={staggerContainerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
       >
-        <span className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
+        <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-brand-500 font-semibold mb-3 block">
           The Journey
-        </span>
-        <h2 className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
+        </motion.span>
+        <motion.h2 variants={sectionHeadingVariants} className="font-display text-4xl sm:text-5xl font-bold text-brand-900 mb-4">
           Farm <span className="text-earth-500">→</span> Process <span className="text-earth-500">→</span> Kitchen
-        </h2>
-        <p className="text-brand-600/70 text-lg max-w-xl mx-auto">
+        </motion.h2>
+        <motion.p variants={sectionDescVariants} className="text-brand-600/70 text-lg max-w-xl mx-auto">
           We believe you deserve to know exactly how your food is made. No mystery. No compromises.
-        </p>
+        </motion.p>
       </motion.div>
 
       {/* Stages */}

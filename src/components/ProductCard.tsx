@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Star, ShoppingCart, Zap } from 'lucide-react';
 import type { Product } from '@/lib/types';
-import { cardVariants } from '@/lib/animations';
+import { cardItemVariants } from '@/lib/animations';
 
 interface ProductCardProps {
   product: Product;
@@ -32,13 +32,13 @@ export default function ProductCard({ product, onAddToCart, index }: ProductCard
 
   return (
     <motion.div
-      variants={cardVariants}
-      className="bg-white rounded-3xl overflow-hidden group relative flex flex-col"
+      variants={cardItemVariants}
+      className="bg-white rounded-3xl overflow-hidden group relative flex flex-col transition-shadow duration-300"
       style={{ boxShadow: '0 2px 16px rgba(45, 99, 45, 0.07)' }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      whileHover={{ y: -6, boxShadow: '0 16px 40px rgba(45, 99, 45, 0.14)' }}
-      transition={{ duration: 0.3 }}
+      whileHover={{ y: -5, boxShadow: '0 16px 36px rgba(45, 99, 45, 0.15)' }}
+      transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {/* Discount Badge */}
       {product.discount > 0 && (
@@ -123,7 +123,8 @@ export default function ProductCard({ product, onAddToCart, index }: ProductCard
               ? 'bg-green-500 text-white'
               : 'bg-brand-600 hover:bg-brand-700 text-white'
           }`}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.96 }}
         >
           <motion.div
             animate={{ rotate: added ? 360 : 0 }}

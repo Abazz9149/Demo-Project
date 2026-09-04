@@ -4,7 +4,15 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { staggerContainerVariants, fadeUpVariants, viewportConfig } from '@/lib/animations';
+import {
+  staggerContainerVariants,
+  sectionBadgeVariants,
+  sectionHeadingVariants,
+  sectionDescVariants,
+  buttonRevealVariants,
+  fadeUpVariants,
+  viewportConfig,
+} from '@/lib/animations';
 
 export default function FinalCTA() {
   const ref = useRef<HTMLElement>(null);
@@ -51,12 +59,12 @@ export default function FinalCTA() {
         whileInView="visible"
         viewport={viewportConfig}
       >
-        <motion.span variants={fadeUpVariants} className="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-5 block">
+        <motion.span variants={sectionBadgeVariants} className="text-xs uppercase tracking-widest text-earth-300 font-semibold mb-5 block">
           Purity Awaits
         </motion.span>
 
         <motion.h2
-          variants={fadeUpVariants}
+          variants={sectionHeadingVariants}
           className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto"
         >
           Bring Purity Back to{' '}
@@ -64,13 +72,13 @@ export default function FinalCTA() {
         </motion.h2>
 
         <motion.p
-          variants={fadeUpVariants}
+          variants={sectionDescVariants}
           className="text-white/70 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           Join 50,000+ Indian families who have returned to eating the way their grandparents did — clean, honest, nourishing food.
         </motion.p>
 
-        <motion.div variants={fadeUpVariants} className="flex flex-wrap gap-4 justify-center">
+        <motion.div variants={buttonRevealVariants} className="flex flex-wrap gap-4 justify-center">
           <motion.a
             id="final-cta-btn"
             href="#products"
@@ -80,13 +88,14 @@ export default function FinalCTA() {
           >
             Explore Products <ArrowRight size={18} />
           </motion.a>
-          <motion.button
+          <motion.a
             id="final-learn-more-btn"
+            href="#why-us"
             className="inline-flex items-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 font-medium px-8 py-4 rounded-full transition-all duration-300 text-base"
             whileHover={{ scale: 1.03 }}
           >
             Learn Our Story
-          </motion.button>
+          </motion.a>
         </motion.div>
 
         {/* Trust row */}
